@@ -20,3 +20,9 @@
 .block-body .block-form .form-group {
   text-align: left;
 }
+
+.block-body .block-token {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

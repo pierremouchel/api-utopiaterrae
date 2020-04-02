@@ -100,13 +100,13 @@ router.post('/signin', function(req, res, next) {
                     where: {
                         email: signin_email
                     },
-                    attributes: ['id', 'email', 'password', 'salt']
+                    attributes: ['id', 'email', 'password', 'salt', 'token']
                 }).then(
                     user => {
                         if (!user) {
                             error('Email doesn\'t exist !');
                         } else if (user.password == bcrypt.hashSync(signin_password, user.salt)) {
-                          success('Connected');
+                          success(user);
                         } else {
                           error('Wrong password !');
                         }
@@ -117,7 +117,9 @@ router.post('/signin', function(req, res, next) {
 
     validationSignin
         .then(function(success) {
-            res.redirect('index');
+            res.render('user', {
+                user: success
+            });
         })
         .catch(function(error) {
             res.render('index', {

@@ -8,19 +8,19 @@
     </div>
 
     {% if signup_error is defined %}
-      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center" id="connectError">
+      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center">
         {{ signup_error }}
       </div>
     {% endif %}
 
     {% if signin_error is defined %}
-      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center" id="connectError">
+      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center">
         {{ signin_error }}
       </div>
     {% endif %}
 
     {% if signup_validate is defined %}
-      <div class="alert alert-success signin-error mb-0 connect-error col-7 text-center" id="connectError">
+      <div class="alert alert-success signin-error mb-0 connect-error col-7 text-center">
         {{ signup_validate }}
       </div>
     {% endif %}

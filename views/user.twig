@@ -1,0 +1,17 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+
+    <div class="block-body row">
+      <div class="block-title col-7">
+        <h1>Bienvenue {{ user.email }}</h1>
+      </div>
+
+      <div class="col-12 block-token">
+        <div class="alert alert-success signin-error mb-0 connect-error col-7 text-center">
+          {{ user.token }}
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

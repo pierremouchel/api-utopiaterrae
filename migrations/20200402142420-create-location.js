@@ -3,7 +3,7 @@ module.exports = {
     up: function(queryInterface, Sequelize) {
         return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
         .then(() => {
-            return queryInterface.createTable('user',
+            return queryInterface.createTable('location',
             {
                 "id": {
                     "type": "INTEGER(11)",
@@ -11,21 +11,13 @@ module.exports = {
                     "primaryKey": true,
                     "autoIncrement": true
                 },
-                "email": {
+                "latitude": {
                     "type": "VARCHAR(255)",
                     "allowNull": false
                 },
-                "password": {
+                "longitude": {
                     "type": "VARCHAR(255)",
                     "allowNull": false
-                },
-                "salt": {
-                    "type": "VARCHAR(255)",
-                    "allowNull": false
-                },
-                "token": {
-                    "type": "VARCHAR(255)",
-                    "allowNull": true
                 },
                 "createdAt": {
                     "type": "DATETIME",
@@ -46,7 +38,7 @@ module.exports = {
     down: function(queryInterface, Sequelize) {
         return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
         .then(() => {
-            return queryInterface.dropTable('user');
+            return queryInterface.dropTable('location');
         })
         .then(() => {
             return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');

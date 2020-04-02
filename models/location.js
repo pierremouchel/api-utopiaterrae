@@ -1,26 +1,18 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
+  return sequelize.define('location', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    email: {
+    latitude: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    password: {
+    longitude: {
       type: DataTypes.STRING(255),
       allowNull: false
-    },
-    salt: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    token: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -33,6 +25,6 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
-    tableName: 'user'
+    tableName: 'location'
   });
 };

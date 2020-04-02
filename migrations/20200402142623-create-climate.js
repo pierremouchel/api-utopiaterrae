@@ -3,7 +3,7 @@ module.exports = {
     up: function(queryInterface, Sequelize) {
         return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
         .then(() => {
-            return queryInterface.createTable('user',
+            return queryInterface.createTable('climate',
             {
                 "id": {
                     "type": "INTEGER(11)",
@@ -11,20 +11,32 @@ module.exports = {
                     "primaryKey": true,
                     "autoIncrement": true
                 },
-                "email": {
-                    "type": "VARCHAR(255)",
-                    "allowNull": false
+                "location_id": {
+                    "type": "INTEGER(11)",
+                    "allowNull": false,
+                    "references": {
+                        "model": "location",
+                        "key": "id"
+                    }
                 },
-                "password": {
-                    "type": "VARCHAR(255)",
-                    "allowNull": false
+                "year_id": {
+                    "type": "INTEGER(11)",
+                    "allowNull": false,
+                    "references": {
+                        "model": "year",
+                        "key": "id"
+                    }
                 },
-                "salt": {
-                    "type": "VARCHAR(255)",
-                    "allowNull": false
+                "sea_level": {
+                    "type": "FLOAT",
+                    "allowNull": true
                 },
-                "token": {
-                    "type": "VARCHAR(255)",
+                "pollution_level": {
+                    "type": "FLOAT",
+                    "allowNull": true
+                },
+                "temperature": {
+                    "type": "FLOAT",
                     "allowNull": true
                 },
                 "createdAt": {
@@ -46,7 +58,7 @@ module.exports = {
     down: function(queryInterface, Sequelize) {
         return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 0')
         .then(() => {
-            return queryInterface.dropTable('user');
+            return queryInterface.dropTable('climate');
         })
         .then(() => {
             return queryInterface.sequelize.query('SET FOREIGN_KEY_CHECKS = 1');

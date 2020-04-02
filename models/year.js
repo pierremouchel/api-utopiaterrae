@@ -1,26 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('user', {
+  return sequelize.define('year', {
     id: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
       autoIncrement: true
     },
-    email: {
-      type: DataTypes.STRING(255),
+    label: {
+      type: DataTypes.INTEGER(4),
       allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    salt: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    token: {
-      type: DataTypes.STRING(255),
-      allowNull: true
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -33,6 +21,6 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
   }, {
-    tableName: 'user'
+    tableName: 'year'
   });
 };

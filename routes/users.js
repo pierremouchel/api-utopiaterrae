@@ -28,7 +28,7 @@ router.post('/signup', function(req, res, next) {
             error('Votre email est invalide !');
         } else if (validator.isEmpty(signup_email) == false) {
             models
-                .User
+                .user
                 .findOne({
                     where: {
                         email: signup_email
@@ -51,14 +51,14 @@ router.post('/signup', function(req, res, next) {
             var hash = bcrypt.hashSync(signup_password, salt);
 
             models
-            .User
+            .user
             .create({
                 email: signup_email,
                 password: hash,
                 salt: salt
             }).then(function(result){
               var token = jwt.sign({id: result['dataValues']['id']}, '8KBBxkxH4hx5zRyVzH');
-              models.User.update(
+              models.user.update(
                 { token: token },
                 { where: { id: result['dataValues']['id'] } }
               )
@@ -95,7 +95,7 @@ router.post('/signin', function(req, res, next) {
             error('Tout les champs ne sont pas complets !');
         } else if (validator.isEmail(signin_email)) {
             models
-                .User
+                .user
                 .findOne({
                     where: {
                         email: signin_email

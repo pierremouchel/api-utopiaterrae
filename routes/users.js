@@ -10,7 +10,6 @@ const Sequelize = require('sequelize');
 
 const saltRounds = 10;
 
-/* GET users listing. */
 router.post('/signup', function(req, res, next) {
 
     signup_password = req.body.signup_password;
@@ -19,13 +18,13 @@ router.post('/signup', function(req, res, next) {
 
     var validationSignup = new Promise((success, error) => {
         if (validator.isEmpty(signup_password) || validator.isEmpty(signup_confpassword) || validator.isEmpty(signup_email)) {
-            error('Tout les champs ne sont pas complets !');
+            error('Empty field');
         } else if (signup_password.length < 5) {
-            error('Votre mot de passe doit contenir 5 caractères minimum !');
+            error('Password must have a minimum of 5 characters');
         } else if (signup_password != signup_confpassword) {
-            error('Les mots de passe ne correspondent pas !');
+            error('Wrong passwords');
         } else if (validator.isEmail(signup_email) == false) {
-            error('Votre email est invalide !');
+            error('Wrong email');
         } else if (validator.isEmpty(signup_email) == false) {
             models
                 .user
@@ -36,9 +35,9 @@ router.post('/signup', function(req, res, next) {
                 }).then(
                     user => {
                         if (user) {
-                            error('Cet email est déjà utilisé !');
+                            error('This email already exist');
                         } else {
-                            success('Tous les champs sont valides');
+                            success('User saved');
                         }
                     }
                 );
@@ -92,7 +91,7 @@ router.post('/signin', function(req, res, next) {
 
     var validationSignin = new Promise((success, error) => {
         if (validator.isEmpty(signin_email) || validator.isEmpty(signin_password)) {
-            error('Tout les champs ne sont pas complets !');
+            error('Empty field');
         } else if (validator.isEmail(signin_email)) {
             models
                 .user

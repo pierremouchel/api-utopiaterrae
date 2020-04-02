@@ -1,0 +1,65 @@
+{% extends "layout.twig" %}
+
+{% block body %}
+
+  <div class="block-body row">
+    <div class="block-title col-7">
+      <h1>API Utopia Terrae</h1>
+    </div>
+
+    {% if signup_error is defined %}
+      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center" id="connectError">
+        {{ signup_error }}
+      </div>
+    {% endif %}
+
+    {% if signin_error is defined %}
+      <div class="alert alert-danger signin-error mb-0 connect-error col-7 text-center" id="connectError">
+        {{ signin_error }}
+      </div>
+    {% endif %}
+
+    {% if signup_validate is defined %}
+      <div class="alert alert-success signin-error mb-0 connect-error col-7 text-center" id="connectError">
+        {{ signup_validate }}
+      </div>
+    {% endif %}
+
+    <div class="col-6">
+      <div class="block-form row">
+        <form class="col-6" action="/users/signin" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="signin_email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="signin_password">
+          </div>
+          <button type="submit" class="btn btn-primary center-block">Connect</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="block-form row">
+        <form class="col-6" action="/users/signup" method="post">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" name="signup_email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword2" name="signup_password">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Confirm password</label>
+            <input type="password" class="form-control" id="exampleInputPassword3" name="signup_confpassword">
+          </div>
+          <button type="submit" class="btn btn-primary center-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

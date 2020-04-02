@@ -1,8 +1,22 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.block-body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-a {
-  color: #00B7FF;
+.block-body .block-title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.block-body .block-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.block-body .block-form .form-group {
+  text-align: left;
 }

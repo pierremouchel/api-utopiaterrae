@@ -8,6 +8,31 @@ var validator = require('validator');
 
 const Sequelize = require('sequelize');
 
+/**
+ * @api {get} /location 1. Request Location information
+ * @apiName GetLocation
+ * @apiGroup Location
+ *
+ * @apiSuccess {Integer} id Id of the Location.
+ * @apiSuccess {Varchar} latitude Latitude of the Location.
+ * @apiSuccess {Varchar} longitude  Longitude of the Location.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "id": 1,
+ *       "latitude": -12.05,
+ *       "longitude": 28.632
+ *     }
+ *
+ * @apiError 404 LocationNotFound
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "LocationNotFound"
+ *     }
+ */
 router.get('/', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
@@ -21,6 +46,36 @@ router.get('/', function(req, res, next) {
   });
 });
 
+/**
+ * @api {get} /location/:id 2. Request Location information by id
+ * @apiName GetLocationById
+ * @apiGroup Location
+ *
+ * @apiParam {Number} id Location unique ID.
+ *
+ * @apiSuccess {Integer} id Id of the Location.
+ * @apiSuccess {Varchar} latitude Latitude of the Location.
+ * @apiSuccess {Varchar} longitude  Longitude of the Location.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "id": 1,
+ *       "latitude": -12.05,
+ *       "longitude": 28.632
+ *     }
+ *
+ * @apiError error The id of the Location was not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "LocationNotFound"
+ *     }
+ *
+ * @apiDescription
+ * Url parameter
+ */
 router.get('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
@@ -37,6 +92,27 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+/**
+ * @api {post} /location 3. Post Location information
+ * @apiName PostLocation
+ * @apiGroup Location
+ *
+ * @apiParam {Varchar} latitude Latitude value
+ * @apiParam {Varchar} longitude Longitude value
+ *
+ * @apiSuccess success Location saved
+ *
+ * @apiError error Error description
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "This location already exist"
+ *     }
+ *
+ * @apiDescription
+ * Parameters in an encoded form.
+ */
 router.post('/', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
@@ -89,6 +165,26 @@ router.post('/', function(req, res, next) {
   });
 });
 
+/**
+ * @api {delete} /location/:id 4. Delete Location information by id
+ * @apiName DeleteLocationById
+ * @apiGroup Location
+ *
+ * @apiParam {Number} id Location unique ID.
+ *
+ * @apiSuccess success Location delete
+ *
+ * @apiError error Location not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "LocationNotFound"
+ *     }
+ *
+ * @apiDescription
+ * Url parameter.
+ */
 router.delete('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
@@ -99,7 +195,7 @@ router.delete('/:id', function(req, res, next) {
       }
     }).then(function(location){
       if (location[0] == 1) {
-        res.json({ success: 'Location update' })
+        res.json({ success: 'Location delete' })
       } else {
         res.json({ error: 'Error query' })
       }
@@ -107,6 +203,26 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
+/**
+ * @api {put} /location/:id 5. Update Location information by id
+ * @apiName UpdateLocationById
+ * @apiGroup Location
+ *
+ * @apiParam {Number} id Location unique ID.
+ *
+ * @apiSuccess success Location update
+ *
+ * @apiError error Location not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "LocationNotFound"
+ *     }
+ *
+ * @apiDescription
+ * Url parameter.
+ */
 router.put('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {

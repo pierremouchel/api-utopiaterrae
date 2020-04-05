@@ -8,36 +8,34 @@ var validator = require('validator');
 const Sequelize = require('sequelize');
 
 /**
- * @api {get} /location 1. Request Location information
- * @apiName GetLocation
- * @apiGroup Location
+ * @api {get} /year 1. Request Year information
+ * @apiName GetYear
+ * @apiGroup Year
  *
- * @apiSuccess {Integer} id Id of the Location.
- * @apiSuccess {Varchar} latitude Latitude of the Location.
- * @apiSuccess {Varchar} longitude  Longitude of the Location.
+ * @apiSuccess {Integer} id Id of the Year.
+ * @apiSuccess {Integer} label Year description.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 1,
- *       "latitude": -12.05,
- *       "longitude": 28.632
+ *       "label": 2015
  *     }
  *
- * @apiError 404 LocationNotFound
+ * @apiError 404 YearNotFound
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "LocationNotFound"
+ *       "error": "YearNotFound"
  *     }
  */
 router.get('/', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    models.location.findAll({
-          attributes: ['id', 'latitude', 'longitude'],
+    models.year.findAll({
+          attributes: ['id', 'label'],
           raw: true
     }).then(function(result){
         res.json({ result })
@@ -46,30 +44,28 @@ router.get('/', function(req, res, next) {
 });
 
 /**
- * @api {get} /location/:id 2. Request Location information by id
- * @apiName GetLocationById
- * @apiGroup Location
+ * @api {get} /year/:id 2. Request Year information by id
+ * @apiName GetYearById
+ * @apiGroup Year
  *
- * @apiParam {Integer} id Location unique ID.
+ * @apiParam {Integer} id Year unique ID.
  *
- * @apiSuccess {Integer} id Id of the Location.
- * @apiSuccess {Varchar} latitude Latitude of the Location.
- * @apiSuccess {Varchar} longitude  Longitude of the Location.
+ * @apiSuccess {Integer} id Id of the Year.
+ * @apiSuccess {Integer} label Year description.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 1,
- *       "latitude": -12.05,
- *       "longitude": 28.632
+ *       "label": -12.05
  *     }
  *
- * @apiError error The id of the Location was not found.
+ * @apiError error The id of the Year was not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "LocationNotFound"
+ *       "error": "YearNotFound"
  *     }
  *
  * @apiDescription
@@ -79,8 +75,8 @@ router.get('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    models.location.findOne({
-          attributes: ['id', 'latitude', 'longitude'],
+    models.year.findOne({
+          attributes: ['id', 'label'],
           where:{
             id: req.params.id
           },
@@ -92,21 +88,20 @@ router.get('/:id', function(req, res, next) {
 });
 
 /**
- * @api {post} /location 3. Post Location information
- * @apiName PostLocation
- * @apiGroup Location
+ * @api {post} /year 3. Post Year information
+ * @apiName PostYear
+ * @apiGroup Year
  *
- * @apiParam {Varchar} latitude Latitude value
- * @apiParam {Varchar} longitude Longitude value
+ * @apiParam {Integer} label Year description
  *
- * @apiSuccess success Location saved
+ * @apiSuccess success Year saved
  *
  * @apiError error Error description
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "This location already exist"
+ *       "error": "This year already exist"
  *     }
  *
  * @apiDescription
@@ -116,68 +111,62 @@ router.post('/', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    var latitude = req.body.latitude;
-    var longitude = req.body.longitude;
-    var validationLocation = new Promise((success, error) => {
-        if (validator.isEmpty(latitude) || validator.isEmpty(longitude)) {
+    var label = req.body.label;
+    var validationYear = new Promise((success, error) => {
+        if (validator.isEmpty(label)) {
             error('Empty field !');
-        } else if (validator.isNumeric(latitude) == false) {
-            error('Wrong latitude');
-        } else if (validator.isNumeric(longitude) == false) {
+        } else if (validator.isInt(label) == false) {
             error('Wrong longitude');
-        } else if (validator.isEmpty(longitude) == false && validator.isEmpty(latitude) == false) {
+        } else if (validator.isEmpty(label) == false) {
             models
-                .location
+                .year
                 .findOne({
                     where: {
-                        latitude: latitude,
-                        longitude: longitude
+                        label: label
                     }
                 }).then(
-                    location => {
-                        if (location) {
-                            error('This location already exist');
+                    year => {
+                        if (year) {
+                            error('This year already exist');
                         } else {
-                            success('Location saved');
+                            success('Year saved');
                         }
                     }
                 );
         }
     })
 
-    validationLocation
+    validationYear
     .then(function(success) {
         models
-        .location
+        .year
         .create({
-            latitude: latitude,
-            longitude: longitude
+            label: label
         }).then(function(result){
             res.json({ result })
         })
     })
     .catch(function(error) {
-      console.log(error);
         res.json({ error })
     });
   });
 });
 
 /**
- * @api {delete} /location/:id 4. Delete Location information by id
- * @apiName DeleteLocationById
- * @apiGroup Location
+ * @api {delete} /year/:id 4. Delete Year information by id
+ * @apiName DeleteYearById
+ * @apiGroup Year
  *
- * @apiParam {Integer} id Location unique ID.
+ * @apiParam {Integer} id Year unique ID.
  *
- * @apiSuccess success Location delete
+ * @apiSuccess success Year delete
  *
- * @apiError error Location not found.
+ * @apiError error Year not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "LocationNotFound"
+ *       "error": "YearNotFound"
  *     }
  *
  * @apiDescription
@@ -187,13 +176,14 @@ router.delete('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    models.location.destroy({
+    models.year.destroy({
       where: {
         id: req.params.id
       }
-    }).then(function(location){
-      if (location[0] == 1) {
-        res.json({ success: 'Location delete' })
+    }).then(function(year){
+      console.log(year);
+      if (year == 1) {
+        res.json({ success: 'Year delete' })
       } else {
         res.json({ error: 'Error query' })
       }
@@ -202,20 +192,21 @@ router.delete('/:id', function(req, res, next) {
 });
 
 /**
- * @api {put} /location/:id 5. Update Location information by id
- * @apiName UpdateLocationById
- * @apiGroup Location
+ * @api {put} /year/:id 5. Update Year information by id
+ * @apiName UpdateYearById
+ * @apiGroup Year
  *
- * @apiParam {Integer} id Location unique ID.
+ * @apiParam {Integer} id Year unique ID in Url.
+ * @apiParam {Integer} label Year description.
  *
- * @apiSuccess success Location update
+ * @apiSuccess success Year update
  *
- * @apiError error Location not found.
+ * @apiError error Year not found.
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found
  *     {
- *       "error": "LocationNotFound"
+ *       "error": "YearNotFound"
  *     }
  *
  * @apiDescription
@@ -225,13 +216,13 @@ router.put('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    models.location.update({ latitude: req.body.latitude, longitude: req.body.longitude }, {
+    models.year.update({ label: req.body.label }, {
       where: {
         id: req.params.id
       }
-    }).then(function(location){
-      if (location[0] == 1) {
-        res.json({ success: 'Location update' })
+    }).then(function(year){
+      if (year[0] == 1) {
+        res.json({ success: 'Year update' })
       } else {
         res.json({ error: 'Error query' })
       }

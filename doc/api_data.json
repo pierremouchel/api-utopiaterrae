@@ -61,7 +61,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "Integer",
             "optional": false,
             "field": "id",
             "description": "<p>Location unique ID.</p>"
@@ -179,7 +179,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "Integer",
             "optional": false,
             "field": "id",
             "description": "<p>Location unique ID.</p>"
@@ -318,7 +318,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "Integer",
             "optional": false,
             "field": "id",
             "description": "<p>Location unique ID.</p>"
@@ -361,5 +361,303 @@
     "version": "0.0.0",
     "filename": "./locations.js",
     "groupTitle": "Location"
+  },
+  {
+    "type": "delete",
+    "url": "/year/:id",
+    "title": "4. Delete Year information by id",
+    "name": "DeleteYearById",
+    "group": "Year",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Year unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Year delete</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Year not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"YearNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>Url parameter.</p>",
+    "version": "0.0.0",
+    "filename": "./years.js",
+    "groupTitle": "Year"
+  },
+  {
+    "type": "get",
+    "url": "/year",
+    "title": "1. Request Year information",
+    "name": "GetYear",
+    "group": "Year",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the Year.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "label",
+            "description": "<p>Year description.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"label\": 2015\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "404",
+            "description": "<p>YearNotFound</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"YearNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./years.js",
+    "groupTitle": "Year"
+  },
+  {
+    "type": "get",
+    "url": "/year/:id",
+    "title": "2. Request Year information by id",
+    "name": "GetYearById",
+    "group": "Year",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Year unique ID.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Id of the Year.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Integer",
+            "optional": false,
+            "field": "label",
+            "description": "<p>Year description.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"id\": 1,\n  \"label\": -12.05\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "error",
+            "description": "<p>The id of the Year was not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"YearNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>Url parameter</p>",
+    "version": "0.0.0",
+    "filename": "./years.js",
+    "groupTitle": "Year"
+  },
+  {
+    "type": "post",
+    "url": "/year",
+    "title": "3. Post Year information",
+    "name": "PostYear",
+    "group": "Year",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "label",
+            "description": "<p>Year description</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Year saved</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Error description</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"This year already exist\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>Parameters in an encoded form.</p>",
+    "version": "0.0.0",
+    "filename": "./years.js",
+    "groupTitle": "Year"
+  },
+  {
+    "type": "put",
+    "url": "/year/:id",
+    "title": "5. Update Year information by id",
+    "name": "UpdateYearById",
+    "group": "Year",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Year unique ID in Url.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Integer",
+            "optional": false,
+            "field": "label",
+            "description": "<p>Year description.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Year update</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "Error 4xx": [
+          {
+            "group": "Error 4xx",
+            "optional": false,
+            "field": "error",
+            "description": "<p>Year not found.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 404 Not Found\n{\n  \"error\": \"YearNotFound\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "description": "<p>Url parameter.</p>",
+    "version": "0.0.0",
+    "filename": "./years.js",
+    "groupTitle": "Year"
   }
 ]

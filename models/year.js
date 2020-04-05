@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    label: {
+    year: {
       type: DataTypes.INTEGER(4),
       allowNull: false
     },

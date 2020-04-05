@@ -8,11 +8,11 @@ var validator = require('validator');
 const Sequelize = require('sequelize');
 
 /**
- * @api {get} /location 1. Request Location information
+ * @api {get} /location 1. Request all Location information
  * @apiName GetLocation
  * @apiGroup Location
  *
- * @apiSuccess {Integer} id Id of the Location.
+ * @apiSuccess {Integer} id Location Id.
  * @apiSuccess {Varchar} latitude Latitude of the Location.
  * @apiSuccess {Varchar} longitude  Longitude of the Location.
  *
@@ -52,7 +52,7 @@ router.get('/', function(req, res, next) {
  *
  * @apiParam {Integer} id Location unique ID.
  *
- * @apiSuccess {Integer} id Id of the Location.
+ * @apiSuccess {Integer} id Location Id.
  * @apiSuccess {Varchar} latitude Latitude of the Location.
  * @apiSuccess {Varchar} longitude  Longitude of the Location.
  *

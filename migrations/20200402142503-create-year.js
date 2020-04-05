@@ -11,7 +11,7 @@ module.exports = {
                     "primaryKey": true,
                     "autoIncrement": true
                 },
-                "label": {
+                "year": {
                     "type": "INTEGER(4)",
                     "allowNull": false
                 },

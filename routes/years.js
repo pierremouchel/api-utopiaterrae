@@ -8,18 +8,18 @@ var validator = require('validator');
 const Sequelize = require('sequelize');
 
 /**
- * @api {get} /year 1. Request Year information
+ * @api {get} /year 1. Request all Year information
  * @apiName GetYear
  * @apiGroup Year
  *
- * @apiSuccess {Integer} id Id of the Year.
- * @apiSuccess {Integer} label Year description.
+ * @apiSuccess {Integer} id Year Id.
+ * @apiSuccess {Integer} year Year description.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 1,
- *       "label": 2015
+ *       "year": 2015
  *     }
  *
  * @apiError 404 YearNotFound
@@ -35,7 +35,7 @@ router.get('/', function(req, res, next) {
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     models.year.findAll({
-          attributes: ['id', 'label'],
+          attributes: ['id', 'year'],
           raw: true
     }).then(function(result){
         res.json({ result })
@@ -50,14 +50,14 @@ router.get('/', function(req, res, next) {
  *
  * @apiParam {Integer} id Year unique ID.
  *
- * @apiSuccess {Integer} id Id of the Year.
- * @apiSuccess {Integer} label Year description.
+ * @apiSuccess {Integer} id Year Id.
+ * @apiSuccess {Integer} year Year description.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
  *     {
  *       "id": 1,
- *       "label": -12.05
+ *       "year": -12.05
  *     }
  *
  * @apiError error The id of the Year was not found.
@@ -76,7 +76,7 @@ router.get('/:id', function(req, res, next) {
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     models.year.findOne({
-          attributes: ['id', 'label'],
+          attributes: ['id', 'year'],
           where:{
             id: req.params.id
           },
@@ -92,7 +92,7 @@ router.get('/:id', function(req, res, next) {
  * @apiName PostYear
  * @apiGroup Year
  *
- * @apiParam {Integer} label Year description
+ * @apiParam {Integer} year Year description
  *
  * @apiSuccess success Year saved
  *
@@ -111,18 +111,18 @@ router.post('/', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    var label = req.body.label;
+    var year = req.body.year;
     var validationYear = new Promise((success, error) => {
-        if (validator.isEmpty(label)) {
+        if (validator.isEmpty(year)) {
             error('Empty field !');
-        } else if (validator.isInt(label) == false) {
-            error('Wrong longitude');
-        } else if (validator.isEmpty(label) == false) {
+        } else if (validator.isInt(year) == false) {
+            error('Wrong year');
+        } else if (validator.isEmpty(year) == false) {
             models
                 .year
                 .findOne({
                     where: {
-                        label: label
+                        year: year
                     }
                 }).then(
                     year => {
@@ -141,7 +141,7 @@ router.post('/', function(req, res, next) {
         models
         .year
         .create({
-            label: label
+            year: year
         }).then(function(result){
             res.json({ result })
         })
@@ -181,7 +181,6 @@ router.delete('/:id', function(req, res, next) {
         id: req.params.id
       }
     }).then(function(year){
-      console.log(year);
       if (year == 1) {
         res.json({ success: 'Year delete' })
       } else {
@@ -197,7 +196,7 @@ router.delete('/:id', function(req, res, next) {
  * @apiGroup Year
  *
  * @apiParam {Integer} id Year unique ID in Url.
- * @apiParam {Integer} label Year description.
+ * @apiParam {Integer} year Year description.
  *
  * @apiSuccess success Year update
  *
@@ -210,18 +209,18 @@ router.delete('/:id', function(req, res, next) {
  *     }
  *
  * @apiDescription
- * Url parameter.
+ * Parameters in an encode form
  */
 router.put('/:id', function(req, res, next) {
   var token = req.headers['x-access-token'];
   jwt.verify(token, '8KBBxkxH4hx5zRyVzH', function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    models.year.update({ label: req.body.label }, {
+    models.year.update({ year: req.body.year }, {
       where: {
         id: req.params.id
       }
     }).then(function(year){
-      if (year[0] == 1) {
+      if (year == 1) {
         res.json({ success: 'Year update' })
       } else {
         res.json({ error: 'Error query' })

@@ -22,7 +22,3 @@ Step 6 : Run the server.
 ```cmd
 npm run start
 ```
-
-Step 7 : Get an Api Key on [localhost](http://localhost:3000/)
-
-Step 8 : Follow api documentation in the "doc" folder.
